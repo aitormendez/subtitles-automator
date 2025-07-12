@@ -1,8 +1,9 @@
+ # Requires: pip install deep-translator
 #!/usr/bin/env python3
 import sys
 import re
 import time
-from googletrans import Translator
+from deep_translator import GoogleTranslator
 
 # Dictionary to map language codes to full details (name and google code)
 LANGUAGE_DETAILS = {
@@ -50,12 +51,11 @@ def clean_translated_text(text, lang_code):
 
 def translate_text_google(text, target_lang):
     """
-    Translates text using Google Translate via googletrans library.
+    Translates text using Google Translate via deep-translator library.
     """
-    translator = Translator()
     try:
-        result = translator.translate(text, dest=target_lang, src='es')
-        return result.text
+        translated = GoogleTranslator(source='es', target=target_lang).translate(text)
+        return translated
     except Exception as e:
         print(f"Google Translate error: {e}", file=sys.stderr)
         return None
