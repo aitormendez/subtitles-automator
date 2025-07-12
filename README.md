@@ -97,3 +97,78 @@ Ejemplo:
 ```bash
 ./translate_srt_google_translator.py tobias.es.srt tobias.zh.srt zh
 ```
+
+# Generación de subtítulos en formato VTT
+
+Esta sección describe el flujo y uso de los scripts para generar subtítulos en formato VTT (WebVTT), ampliamente utilizado en plataformas web y compatible con servicios como Bunny.net. Los scripts permiten automatizar la generación y traducción de archivos VTT a partir de un video original.
+
+## Descripción general
+
+- Los scripts VTT siguen el mismo flujo que los de SRT, pero generan archivos en formato `.vtt` en lugar de `.srt`.
+- Permiten automatizar la transcripción, traducción y organización de los subtítulos en distintos idiomas para integrarlos fácilmente en plataformas web.
+
+## Generar todos los subtítulos VTT automáticamente
+
+El script `automate_subtitles_vtt.py` automatiza la generación de subtítulos VTT en español y su traducción a varios idiomas, siguiendo la misma lógica que el flujo principal.
+
+Uso:
+
+```bash
+./automate_subtitles_vtt.py <ruta_al_video>
+```
+
+Ejemplo:
+
+```bash
+./automate_subtitles_vtt.py "/path/to/video/tobias.webm"
+```
+
+Esto generará archivos VTT en español y en los idiomas definidos, usando la convención `<nombre_del_video>.<idioma>.vtt`.
+
+## Traducir subtítulos VTT individualmente con Ollama
+
+El script `translate_vtt.py` permite traducir un archivo VTT a otro idioma utilizando modelos locales de Ollama.
+
+Uso:
+
+```bash
+./translate_vtt.py <archivo_vtt_entrada> <archivo_vtt_salida> <modelo_ollama> <código_idioma>
+```
+
+Ejemplo:
+
+```bash
+./translate_vtt.py tobias.es.vtt tobias.en.vtt llama3 en
+```
+
+## Traducir subtítulos VTT individualmente con Google Translate
+
+El script `translate_vtt_google_translator.py` traduce archivos VTT utilizando Google Translate, ideal para idiomas en los que la traducción automática local no es óptima (por ejemplo, chino).
+
+Uso:
+
+```bash
+./translate_vtt_google_translator.py <archivo_vtt_entrada> <archivo_vtt_salida> <código_idioma>
+```
+
+Ejemplo:
+
+```bash
+./translate_vtt_google_translator.py tobias.es.vtt tobias.zh.vtt zh
+```
+
+# Códigos de idioma para etiquetas y Bunny.net
+
+La siguiente tabla muestra los códigos de idioma y etiquetas recomendados para usar en las plataformas y para la correcta carga en Bunny.net:
+
+| Idioma               | Label común  | Language Code |
+| -------------------- | ------------ | ------------- |
+| Español              | Español      | es            |
+| Inglés               | English      | en            |
+| Francés              | Français     | fr            |
+| Alemán               | Deutsch      | de            |
+| Italiano             | Italiano     | it            |
+| Chino (simplificado) | 中文（简体） | zh            |
+| Chino (tradicional)  | 中文（繁體） | zh            |
+| Portugués            | Português    | pt            |
+| Ruso                 | Русский      | ru            |

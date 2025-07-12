@@ -172,4 +172,22 @@ El script `automate_subtitles.py` implementa un flujo de trabajo automatizado pa
 
 ### Diseño y Racional
 
-Este flujo automatizado busca integrar las mejores prácticas y herramientas disponibles para ofrecer una solución robusta y flexible para la transcripción y traducción de videos. La combinación de `whisper.cpp` para transcripción rápida y precisa, junto con una estrategia de traducción adaptativa que aprovecha tanto Google Translate como Ollama, permite manejar múltiples idiomas con alta calidad y eficiencia. Además, la automatización de la extracción de audio y el control de reentrancia simplifican la experiencia del usuario, reduciendo la necesidad de intervención manual y minimizando errores operativos.
+## Subtítulos en formato VTT
+
+El sistema de generación de subtítulos se ha extendido para permitir también la creación y traducción de archivos en formato `.vtt`. Este formato es especialmente útil para reproductores HTML5 y plataformas modernas que requieren compatibilidad con `WebVTT`.
+
+Las herramientas involucradas son las siguientes:
+
+- `automate_subtitles_vtt.py`: Automatiza la transcripción del video y la traducción a múltiples idiomas en formato `.vtt`.
+- `translate_vtt.py`: Traduce archivos `.vtt` usando modelos de lenguaje locales gestionados por Ollama.
+- `translate_vtt_google_translator.py`: Traduce archivos `.vtt` usando el traductor de Google a través de la librería `deep-translator`, en lugar de `googletrans`, mejorando la compatibilidad con idiomas como el chino.
+
+### Flujo de trabajo
+
+1. **Extracción de audio**: igual que en la versión `.srt`, el audio se extrae en formato `.wav`.
+2. **Transcripción al español**: se genera un archivo `.es.vtt` usando `whisper.cpp`.
+3. **Traducción**: se generan versiones traducidas con los siguientes criterios:
+   - Traducciones al chino (`zh`, `zh-Hans`, `zh-Hant`) utilizan `translate_vtt_google_translator.py`.
+   - Todos los demás idiomas utilizan `translate_vtt.py`.
+
+La lógica del sistema evita repetir trabajo si ya existen los archivos intermedios (`.wav`, `.es.vtt`, traducciones), garantizando reentrancia.
